@@ -1,30 +1,23 @@
 class Solution {
     public List<String> letterCasePermutation(String s) {
         List<String> result = new ArrayList<>();
-        backtrack(s, 0, "", result);
+        check(result,"",0,s);
         return result;
     }
-
-    private void backtrack(String s, int index, String current, List<String> result) {
-        // BASE CASE: If current built string matches original length, add it
-        if (index == s.length()) {
-            result.add(current);
-            return;
+    public void check(List<String> result,String curr,int index,String s ){
+        if(index == s.length()){
+            result.add(curr);
+            return ;
         }
-
-        char ch = s.charAt(index);
-
-        // IF IT'S A LETTER: Branch into lowercase and uppercase
-        if (Character.isLetter(ch)) {
-            // Choice 1: Add lowercase version to candidate string
-            backtrack(s, index + 1, current + Character.toLowerCase(ch), result);
-
-            // Choice 2: Add uppercase version to candidate string
-            backtrack(s, index + 1, current + Character.toUpperCase(ch), result);
-        } 
-        // IF IT'S A DIGIT: Append character as is
+        char  ch = s.charAt(index);
+         if(Character.isLetter(ch)){
+            check(result,curr + Character.toLowerCase(ch),index+1,s);
+            check(result,curr + Character.toUpperCase(ch),index+1,s);
+            
+        }
         else {
-            backtrack(s, index + 1, current + ch, result);
+            check(result,curr+ch,index+1,s);
+  
         }
     }
 }
