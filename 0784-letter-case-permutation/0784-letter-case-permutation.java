@@ -1,31 +1,30 @@
 class Solution {
     public List<String> letterCasePermutation(String s) {
         List<String> result = new ArrayList<>();
-        // Convert string to character array for easy modification
-        backtrack(s.toCharArray(), 0, result);
+        backtrack(s, 0, "", result);
         return result;
     }
 
-    private void backtrack(char[] chars, int index, List<String> result) {
-        // BASE CASE: If we reached the end of the string, record the word
-        if (index == chars.length) {
-            result.add(new String(chars));
+    private void backtrack(String s, int index, String current, List<String> result) {
+        // BASE CASE: If current built string matches original length, add it
+        if (index == s.length()) {
+            result.add(current);
             return;
         }
 
-        // IF IT'S A LETTER: Explore both lowercase and uppercase branches
-        if (Character.isLetter(chars[index])) {
-            // Choice 1: Make it lowercase
-            chars[index] = Character.toLowerCase(chars[index]);
-            backtrack(chars, index + 1, result);
+        char ch = s.charAt(index);
 
-            // Choice 2: Make it uppercase
-            chars[index] = Character.toUpperCase(chars[index]);
-            backtrack(chars, index + 1, result);
+        // IF IT'S A LETTER: Branch into lowercase and uppercase
+        if (Character.isLetter(ch)) {
+            // Choice 1: Add lowercase version to candidate string
+            backtrack(s, index + 1, current + Character.toLowerCase(ch), result);
+
+            // Choice 2: Add uppercase version to candidate string
+            backtrack(s, index + 1, current + Character.toUpperCase(ch), result);
         } 
-        // IF IT'S A DIGIT: Just move to the next index
+        // IF IT'S A DIGIT: Append character as is
         else {
-            backtrack(chars, index + 1, result);
+            backtrack(s, index + 1, current + ch, result);
         }
     }
 }
