@@ -1,13 +1,13 @@
 class Solution {
     public boolean wordBreak(String s, List<String> wordDict) {
-        List<String> result = new ArrayList<>();
         Boolean[] dp = new Boolean[s.length() + 1];
-        return check(s, wordDict, result, 0, dp);
+        Set<String> wordSet = new HashSet<>(wordDict);
+
+        return check(s, wordSet, dp, 0);
     }
 
-    private boolean check(String s, List<String> wordDict,
-                          List<String> result, int index, Boolean[] dp) {
-        Set<String> wordSet = new HashSet<>(wordDict);
+    private boolean check(String s, Set<String> wordSet,
+                          Boolean[] dp, int index) {
 
         if (index == s.length()) {
             return true;
@@ -21,7 +21,7 @@ class Solution {
             String temp = s.substring(index, i);
 
             if (wordSet.contains(temp)) {
-                if (check(s, wordDict, result, i, dp)) {
+                if (check(s, wordSet, dp, i)) {
                     return dp[index] = true;
                 }
             }
