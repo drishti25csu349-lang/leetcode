@@ -7,6 +7,7 @@ public class Solution {
             if(t1 == null){
                 t1 = headB;
             }
+            
             else{
                 t1 = t1.next;
             }
